@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, FileText, Sparkles, Check, ChevronRight, HELP_Icon, Terminal, TableProperties, BookOpen, Binary, AlertCircle, Image as ImageIcon, Video, FileCode } from 'lucide-react';
+import { Upload, FileText, Sparkles, Check, ChevronRight, HELP_Icon, Terminal, TableProperties, BookOpen, Binary, AlertCircle, Image as ImageIcon, Video, FileCode, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FileMeta } from '../types';
 import WorkflowProgress from './WorkflowProgress';
@@ -308,9 +308,12 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
 
                 <button 
                   onClick={onClear}
-                  className="w-full py-3.5 px-5 rounded-2xl bg-slate-950 border border-white/[0.08] hover:border-white/[0.2] hover:bg-slate-900 text-xs font-mono tracking-wider uppercase font-semibold text-white transition-all cursor-pointer text-center"
+                  className="w-full py-4 px-5 rounded-2xl relative overflow-hidden group font-mono font-bold text-xs tracking-widest uppercase transition-all duration-300 cursor-pointer text-center bg-cyan-500/10 hover:bg-cyan-500/20 border-2 border-cyan-500/40 hover:border-cyan-400 hover:scale-[1.03] active:scale-[0.98] text-cyan-300 hover:text-white shadow-[0_0_15px_-3px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_-3px_rgba(6,182,212,0.5)]"
                 >
-                  Compress Another File
+                  <div className="flex items-center justify-center gap-2">
+                    <RefreshCw className="w-4 h-4 shrink-0 transition-transform duration-700 group-hover:rotate-180" />
+                    <span>Compress Another File</span>
+                  </div>
                 </button>
               </div>
             ) : (
