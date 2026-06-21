@@ -30,7 +30,7 @@ export default function Header() {
                 </span>
               </div>
               <p className="text-sm text-slate-400 mt-1">
-                Advanced Compression Performance Suite
+                Data Compression Ratio Analyzer
               </p>
             </div>
           </div>
@@ -39,13 +39,13 @@ export default function Header() {
           <div className="flex items-center gap-4 text-xs font-mono">
             <div className="flex items-center gap-2 bg-white/[0.03] px-3 py-1.5 rounded-xl border border-white/[0.05]">
               <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-              <span className="text-slate-400">HUFFMAN CODER:</span>
+              <span className="text-slate-400">HUFFMAN ANALYZER:</span>
               <span className="text-cyan-400 font-semibold">ONLINE</span>
             </div>
             
             <div className="flex items-center gap-2 bg-white/[0.03] px-3 py-1.5 rounded-xl border border-white/[0.05]">
               <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-              <span className="text-slate-400">LZW ENGINE:</span>
+              <span className="text-slate-400">LZW ANALYZER:</span>
               <span className="text-purple-400 font-semibold">READY</span>
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function Header() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-xl md:text-2xl font-bold text-slate-200 mt-3 font-sans"
           >
-            Advanced Compression Performance Suite
+            Data Compression Ratio Analyzer
           </motion.h3>
 
           <motion.p 
@@ -78,7 +78,7 @@ export default function Header() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-slate-400 text-base md:text-lg mt-3 leading-relaxed"
           >
-            Analyze and compare Huffman and LZW compression algorithms based on compression ratio, execution time, and efficiency. Upload custom datasets, explore bitstreams, and discover optimal data transmission architectures.
+            Analyze and compare Huffman and LZW compression performance based on compression ratio, execution time, and efficiency. Upload custom datasets, explore algorithmic behaviors, and evaluate which engine is best suited for your data.
           </motion.p>
         </div>
       </div>

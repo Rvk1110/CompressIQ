@@ -34,10 +34,10 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
       {/* Title */}
       <div className="mb-6">
         <span className="text-[10px] uppercase font-mono tracking-widest text-cyan-400 font-semibold block">
-          Lossless Optimization Strategy
+          Comparative Recommendation
         </span>
         <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-          Optimal Compression Pipeline
+          Algorithmic Analysis & Winner
         </h2>
       </div>
 
@@ -60,7 +60,7 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
               isInefficient ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
             }`}>
               <Trophy className={`w-3.5 h-3.5 ${isInefficient ? 'text-rose-300' : 'text-emerald-300 animate-pulse'}`} />
-              <span>🏆 Best Compression Method</span>
+              <span>🏆 Recommended Algorithm for Dataset</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-black text-white leading-none">
@@ -75,9 +75,9 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
               <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-300 rounded-2xl text-xs font-mono flex items-start gap-3 mt-4 text-left">
                 <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
                 <div>
-                  <h5 className="font-bold text-rose-200">File is already highly compressed</h5>
+                  <h5 className="font-bold text-rose-200">Dataset is already highly compressed</h5>
                   <p className="mt-1 leading-relaxed text-[11px]">
-                    Further lossless compression is not beneficial. All tested pipelines resulted in file expansion due to metadata and encoding dictionary overheads.
+                    Further algorithmic compression is not beneficial for ratio improvement. Both tested models resulted in footprint expansion due to internal tracking overheads.
                   </p>
                 </div>
               </div>
@@ -90,7 +90,7 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
             {/* Original Size Card */}
             <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between">
               <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                📦 Original Size
+                📦 Dataset Original Size
               </span>
               <div className="text-base font-bold text-slate-200 mt-2 font-sans">
                 {formatBytes(originalSize)}
@@ -101,7 +101,7 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
             {/* Compressed Size Card */}
             <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between">
               <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                📉 Final Compressed Size
+                📉 Equivalent Size Post-Analysis
               </span>
               <div className={`text-base font-bold mt-2 font-sans ${isInefficient ? 'text-rose-400' : 'text-emerald-400'}`}>
                 {formatBytes(bestMethod.compressedSizeBytes)}
@@ -142,28 +142,6 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
 
           </div>
 
-        </div>
-
-        {/* Binary Output Action Console */}
-        <div className="mt-8 pt-6 border-t border-white/[0.06] space-y-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <span className="text-xs font-mono text-slate-400 flex items-center gap-2">
-              <Layers className="w-4 h-4 text-cyan-400" />
-              <span>Actual Compressed Stream Output ({bestMethod.algorithmName})</span>
-            </span>
-            <div className="flex items-center gap-2 shrink-0">
-              <button
-                onClick={handleCopy}
-                className="px-3.5 py-1.5 bg-slate-950 border border-white/[0.08] hover:border-white/[0.2] hover:bg-slate-900 rounded-lg text-[10px] font-mono text-slate-300 flex items-center gap-2 active:scale-95 transition-all cursor-pointer"
-              >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copied ? 'COPIED!' : 'COPY BUFFER'}</span>
-              </button>
-            </div>
-          </div>
-          <div className="w-full bg-slate-950/80 border border-white/[0.08] p-4 rounded-2xl text-[10px] font-mono text-slate-400 overflow-x-auto select-text max-h-32 whitespace-pre-wrap leading-relaxed">
-            {bestMethod.rawData || "[Payload Empty]"}
-          </div>
         </div>
 
       </motion.div>

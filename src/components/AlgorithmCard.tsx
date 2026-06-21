@@ -1,5 +1,5 @@
 import { HuffmanResult, LzwResult } from '../types';
-import { Network, Database, Copy, Check, Info, Binary, TableProperties, ChevronDown, ChevronUp } from 'lucide-react';
+import { Network, Database, Info, Binary, TableProperties, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -9,15 +9,7 @@ interface AlgorithmCardProps {
 }
 
 export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
-  const [copiedHuffman, setCopiedHuffman] = useState(false);
-  const [copiedLzw, setCopiedLzw] = useState(false);
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
-
-  const copyToClipboard = (text: string, setCopied: (v: boolean) => void) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const formatBytes = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
@@ -120,7 +112,7 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
 
               <div className="bg-slate-950/60 border border-white/[0.04] p-3.5 rounded-2xl">
                 <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
-                  Execution Benchmark
+                  Execution Time
                 </span>
                 <span className="text-lg font-black text-white block mt-1 font-mono">
                   {huffman.executionTimeMs} ms
@@ -132,7 +124,7 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
 
               <div className="bg-slate-950/60 border border-white/[0.04] p-3.5 rounded-2xl">
                 <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
-                  Asymptotic Limit
+                  Algorithmic Complexity
                 </span>
                 <span className="text-lg font-black text-blue-400 block mt-1 font-mono">
                   {huffman.complexity}
@@ -156,17 +148,9 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-                      <Binary className="w-3.5 h-3.5 text-cyan-505" />
+                      <Binary className="w-3.5 h-3.5 text-cyan-500" />
                       Bitstream Encoding Preview
                     </div>
-                    <button
-                      id="copy-huffman-preview"
-                      onClick={() => copyToClipboard(huffman.encodedPreview, setCopiedHuffman)}
-                      className="p-1 rounded-md bg-white/[0.02] border border-white/[0.05] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05] transition-all cursor-pointer"
-                      title="Copy compression bitstream"
-                    >
-                      {copiedHuffman ? <Check className="w-3.5 h-3.5 text-cyan-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    </button>
                   </div>
                   
                   <p className="text-[11.5px] font-mono text-slate-300 break-all leading-relaxed select-text select-all font-medium whitespace-pre-wrap max-h-24 overflow-y-auto pr-1">
@@ -255,7 +239,7 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
 
               <div className="bg-slate-950/60 border border-white/[0.04] p-3.5 rounded-2xl">
                 <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
-                  Execution Benchmark
+                  Execution Time
                 </span>
                 <span className="text-lg font-black text-white block mt-1 font-mono">
                   {lzw.executionTimeMs} ms
@@ -267,7 +251,7 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
 
               <div className="bg-slate-950/60 border border-white/[0.04] p-3.5 rounded-2xl">
                 <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
-                  Asymptotic Limit
+                  Algorithmic Complexity
                 </span>
                 <span className="text-lg font-black text-pink-400 block mt-1 font-mono">
                   {lzw.complexity}
@@ -294,14 +278,6 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
                       <TableProperties className="w-3.5 h-3.5 text-purple-500" />
                       Index Token Array Preview
                     </div>
-                    <button
-                      id="copy-lzw-preview"
-                      onClick={() => copyToClipboard(lzw.encodedPreview, setCopiedLzw)}
-                      className="p-1 rounded-md bg-white/[0.02] border border-white/[0.05] text-slate-500 hover:text-slate-300 hover:bg-white/[0.05] transition-all cursor-pointer"
-                      title="Copy integer dictionary tokens"
-                    >
-                      {copiedLzw ? <Check className="w-3.5 h-3.5 text-purple-400" /> : <Copy className="w-3.5 h-3.5" />}
-                    </button>
                   </div>
                   
                   <p className="text-[11.5px] font-mono text-slate-300 break-all leading-relaxed select-text select-all font-medium whitespace-pre-wrap max-h-24 overflow-y-auto pr-1">

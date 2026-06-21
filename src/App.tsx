@@ -6,13 +6,14 @@ import MetricTable from './components/MetricTable';
 import AnalyticsCharts from './components/AnalyticsCharts';
 import RecommendationPanel from './components/RecommendationPanel';
 import KpiMetrics from './components/KpiMetrics';
+import InsightsSection from './components/InsightsSection';
 import Footer from './components/Footer';
 
 import { runOptimizationPipeline } from './utils/compressor';
 import { FileMeta, HuffmanResult, LzwResult, OptimizationRecommendation } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 
-// Initial default payload corresponding to PRESETS[0]
+// ... (remaining setup stays exactly identical)
 const INITIAL_CONTENT = Array(120).fill(
   `[2026-06-20T21:32:17] INFO: Router connection active port 3000.\n` +
   `[2026-06-20T21:32:18] DEBUG: Received request GET /api/health.\n` +
@@ -138,6 +139,9 @@ export default function App() {
                 originalSize={activeFileMeta.sizeBytes} 
                 bestMethod={optimizationResult.bestMethod} 
               />
+
+              {/* Section 6: Educational Deep-Dive Insights */}
+              <InsightsSection />
 
             </div>
           </motion.main>

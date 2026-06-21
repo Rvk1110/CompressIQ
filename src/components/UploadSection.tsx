@@ -273,7 +273,7 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                   </div>
                   <div>
                     <span className="text-[10px] uppercase font-mono tracking-widest text-emerald-400 font-bold block">
-                      Payload Loaded & Compressed
+                      Dataset Analysis Complete
                     </span>
                     <h4 className="text-lg font-bold text-white mt-0.5 break-all">{activeFileMeta.name}</h4>
                   </div>
@@ -281,27 +281,25 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                 
                 <div className="grid grid-cols-2 gap-4 bg-slate-950/60 p-4.5 rounded-2xl border border-white/[0.04] font-mono text-xs">
                   <div>
-                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Format</span>
+                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Dataset Name</span>
+                    <span className="text-slate-300 font-semibold truncate block mt-0.5">{activeFileMeta.name}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Dataset Type</span>
                     <span className="text-slate-300 font-semibold truncate block mt-0.5">
-                      {activeFileMeta.type === 'text/csv' ? 'COMMA DOCUMENT (.csv)' : 'TEXT FORMAT (.txt)'}
+                      {activeFileMeta.type === 'text/csv' ? 'CSV Matrix' : 'Text Sequence'}
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Original Footprint</span>
+                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Dataset Size</span>
                     <span className="text-slate-300 font-semibold block mt-0.5">
                       {formatBytes(activeFileMeta.sizeBytes)} ({activeFileMeta.sizeBytes} B)
                     </span>
                   </div>
                   <div>
-                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Symbols Parsed</span>
-                    <span className="text-slate-300 font-semibold block mt-0.5">
-                      {activeFileMeta.charCount.toLocaleString()} UTF-8 chars
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Timestamp</span>
-                    <span className="text-slate-300 font-semibold block mt-0.5 truncate">
-                      {activeFileMeta.timestamp}
+                    <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Analysis Status</span>
+                    <span className="text-emerald-400 font-semibold block mt-0.5">
+                      COMPLETED
                     </span>
                   </div>
                 </div>
@@ -312,7 +310,7 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                 >
                   <div className="flex items-center justify-center gap-2">
                     <RefreshCw className="w-4 h-4 shrink-0 transition-transform duration-700 group-hover:rotate-180" />
-                    <span>Compress Another File</span>
+                    <span>Analyze Another Dataset</span>
                   </div>
                 </button>
               </div>
@@ -352,9 +350,12 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                   </div>
 
                   <h4 className="text-lg font-semibold text-white">
-                    Click anywhere or drag files here
+                    Upload Dataset for Analysis
                   </h4>
-                  <p className="text-xs text-slate-400 mt-2 max-w-sm">
+                  <p className="text-xs text-slate-400 mt-1 max-w-sm">
+                    Click anywhere or drag files here
+                  </p>
+                  <p className="text-[11px] text-cyan-400 font-mono mt-2">
                     Supported: PDF, DOCX, TXT, CSV, Images
                   </p>
                 </div>
@@ -455,7 +456,7 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                 
                 <div className="flex items-center justify-center gap-3">
                   <Sparkles className="w-5 h-5 text-cyan-300 fill-cyan-400/20 animate-pulse shrink-0" />
-                  <span className="font-sans">COMPRESS & ANALYZE PERFORMANCE</span>
+                  <span className="font-sans">ANALYZE & COMPARE ALGORITHMS</span>
                 </div>
               </button>
             </div>
@@ -470,7 +471,7 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-5 h-5 text-cyan-400" />
                   <h3 className="text-base font-bold text-slate-200">
-                    Compression Insights
+                    Algorithm Insights
                   </h3>
                 </div>
                 
@@ -512,12 +513,12 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
               <div className="glass-card rounded-3xl p-6 sm:p-8 space-y-5 flex-1 select-none border border-white/[0.06] bg-slate-950/20">
                 <div className="mb-2">
                   <h3 className="text-base font-bold text-slate-200">
-                    Choose Sample Analytics Payload
+                    Select Sample Dataset for Analysis
                   </h3>
                 </div>
                 
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  No custom files? Instantly load beautiful preset scenarios engineered to showcase differences in pattern entropy and structural code speeds.
+                  No custom datasets? Instantly load a preset scenario engineered to showcase differences in algorithmic pattern entropy and execution times.
                 </p>
 
                 <div className="space-y-3 pt-2">
