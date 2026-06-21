@@ -88,6 +88,14 @@ const PRESETS = [
     icon: Binary,
     content: Array(100).fill('ATCGGACTTAGCTACGATCGGCTAGCTAGCTAGCGGGGTTAACCGGTT').join(''),
     type: 'text/plain',
+  },
+  {
+    key: 'direct_input',
+    name: 'Direct Text Input',
+    desc: 'Enter custom raw text/symbols for custom payload analysis',
+    icon: FileText,
+    content: '',
+    type: 'text/plain',
   }
 ];
 
@@ -180,6 +188,15 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
 
   const selectPreset = (preset: typeof PRESETS[number]) => {
     setWarningMessage('');
+    if (preset.key === 'direct_input') {
+      setCustomText('');
+      setFileName('custom_clipboard_input.txt');
+      setFileType('text/plain');
+      setIsBinaryFile(false);
+      setActivePreset('direct_input');
+      setTextMode(true);
+      return;
+    }
     setCustomText(preset.content);
     setFileName(`preset_${preset.key}.${preset.type === 'text/csv' ? 'csv' : 'txt'}`);
     setFileType(preset.type);
@@ -334,38 +351,9 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                   <h4 className="text-lg font-semibold text-white">
                     Click anywhere or drag files here
                   </h4>
-                  <p className="text-xs text-slate-400 mt-1 max-w-sm">
-                    Supports standard documents, PDFs, Word files, images, video, and audio payloads. Large assets will compile instantly using safe buffer limits.
+                  <p className="text-xs text-slate-400 mt-2 max-w-sm">
+                    Supported: PDF, DOCX, TXT, CSV, Images
                   </p>
-
-                  <div className="flex flex-wrap gap-3 items-center justify-center mt-6">
-                    <button
-                      id="browse-files-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        fileInputRef.current?.click();
-                      }}
-                      className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-200 border border-white/[0.08] text-xs font-medium hover:bg-slate-700 hover:text-white transition-all cursor-pointer shadow-sm active:scale-95"
-                    >
-                      Browse File Path
-                    </button>
-                    <span className="text-xs text-slate-500 font-mono">OR</span>
-                    <button
-                      id="toggle-custom-input-mode"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTextMode(true);
-                        setActivePreset('');
-                      }}
-                      className={`px-5 py-2.5 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
-                        textMode 
-                          ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30 shadow-[0_0_15px_-5px_rgba(6,182,212,0.3)]' 
-                          : 'bg-transparent text-slate-400 border-white/[0.05] hover:text-slate-200 hover:bg-white/[0.02]'
-                      }`}
-                    >
-                      Direct Symbol Console
-                    </button>
-                  </div>
                 </div>
               </div>
             )}
