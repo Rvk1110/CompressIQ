@@ -117,8 +117,20 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
       
       const maxBytes = 1500000;
       const len = Math.min(bytes.length, maxBytes);
+      let warning = '';
       if (bytes.length > maxBytes) {
-        setWarningMessage(`File is large (${(bytes.length / 1000000).toFixed(2)}MB). Compressing the first 1.5MB to preserve performance.`);
+        warning += `File is large (${(bytes.length / 1000000).toFixed(2)}MB). Compressing the first 1.5MB to preserve performance. `;
+      }
+      const isAlreadyCompressedImage = file.name.endsWith('.png') || 
+                                       file.name.endsWith('.jpg') || 
+                                       file.name.endsWith('.jpeg') || 
+                                       file.type === 'image/png' || 
+                                       file.type === 'image/jpeg';
+      if (isAlreadyCompressedImage) {
+        warning += "This image format is already compressed. Huffman/LZW may provide little or no additional compression.";
+      }
+      if (warning) {
+        setWarningMessage(warning);
       }
 
       let binary = '';
@@ -350,6 +362,24 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
               )}
             </motion.div>
           )}
+
+          {/* Compare Trigger button relocated for better UX flow */}
+          <div className="pt-4">
+            <button
+              id="compress-and-compare-btn"
+              disabled={isProcessing}
+              onClick={handleTriggerAnalysis}
+              className={`w-full py-4.5 px-6 rounded-2xl relative overflow-hidden group font-sans font-bold text-sm tracking-wide text-white shadow-lg shadow-cyan-500/10 cursor-pointer active:scale-98 transition-all bg-cyan-600 hover:bg-cyan-500`}
+            >
+              {/* Inner glow mask */}
+              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <div className="flex items-center justify-center gap-3">
+                <Sparkles className="w-5 h-5 text-cyan-300 fill-cyan-400/20 animate-pulse shrink-0" />
+                <span className="font-sans">COMPRESS & ANALYZE PERFORMANCE</span>
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Right Side: Preset templates & Action button */}
@@ -405,25 +435,6 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
               })}
             </div>
           </div>
-
-          {/* Compare Trigger button with absolute premium glass vibe */}
-          <div className="pt-2">
-            <button
-              id="compress-and-compare-btn"
-              disabled={isProcessing}
-              onClick={handleTriggerAnalysis}
-              className={`w-full py-4.5 px-6 rounded-2xl relative overflow-hidden group font-sans font-bold text-sm tracking-wide text-white shadow-lg shadow-cyan-500/10 cursor-pointer active:scale-98 transition-all bg-cyan-600 hover:bg-cyan-500`}
-            >
-              {/* Inner glow mask */}
-              <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="flex items-center justify-center gap-3">
-                <Sparkles className="w-5 h-5 text-cyan-300 fill-cyan-400/20 animate-pulse shrink-0" />
-                <span className="font-sans">COMPRESS & ANALYZE PERFORMANCE</span>
-              </div>
-            </button>
-          </div>
-
         </div>
 
       </div>

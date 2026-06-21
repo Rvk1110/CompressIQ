@@ -6,15 +6,7 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Section 8: Conclusion Panel */}
-        <div id="conclusion-panel" className="glass-card bg-white/[0.01] border border-cyan-500/10 rounded-2xl p-6 sm:p-8 max-w-4xl mx-auto text-center space-y-4">
-          <span className="text-[10px] uppercase font-mono tracking-widest text-cyan-400 font-bold px-2 py-0.5 rounded bg-cyan-400/10 border border-cyan-400/20">
-            Analytical Summary
-          </span>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl mx-auto">
-            The system performs compression using both Huffman and LZW algorithms, compares their performance based on compression ratio and execution time, and recommends the most suitable compression technique for the given input.
-          </p>
-        </div>
+
 
         <div className="flex flex-col md:flex-row items-center justify-between pt-6 border-t border-white/[0.04] text-[11px] font-mono text-slate-500 gap-4">
           

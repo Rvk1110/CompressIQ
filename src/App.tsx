@@ -7,12 +7,11 @@ import AlgorithmCard from './components/AlgorithmCard';
 import MetricTable from './components/MetricTable';
 import AnalyticsCharts from './components/AnalyticsCharts';
 import RecommendationPanel from './components/RecommendationPanel';
-import InsightsSection from './components/InsightsSection';
 import KpiMetrics from './components/KpiMetrics';
 import Footer from './components/Footer';
 
-import { runHuffmanCompression, runLzwCompression, generateAIRecommendation } from './utils/compressor';
-import { FileMeta, HuffmanResult, LzwResult, AIRecommendation } from './types';
+import { runOptimizationPipeline } from './utils/compressor';
+import { FileMeta, HuffmanResult, LzwResult, OptimizationRecommendation } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 
 // Initial default payload corresponding to PRESETS[0]
@@ -26,9 +25,7 @@ const INITIAL_CONTENT = Array(120).fill(
 export default function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [activeFileMeta, setActiveFileMeta] = useState<FileMeta | null>(null);
-  const [huffmanResult, setHuffmanResult] = useState<HuffmanResult | null>(null);
-  const [lzwResult, setLzwResult] = useState<LzwResult | null>(null);
-  const [recommendation, setRecommendation] = useState<AIRecommendation | null>(null);
+  const [optimizationResult, setOptimizationResult] = useState<OptimizationRecommendation | null>(null);
 
   // Temporary staging buffer during workflow loading sequence
   const [pendingPayload, setPendingPayload] = useState<{ name: string; content: string; type: string } | null>(null);
@@ -41,17 +38,11 @@ export default function App() {
   const runAnalysisPipeline = (name: string, content: string, type: string) => {
     const originalSizeBytes = content.length;
     
-    // 1. Core algorithm executions
-    const huffman = runHuffmanCompression(content);
-    const lzw = runLzwCompression(content);
+    // 1. Run optimization pipeline for all lossless methods
+    const optResult = runOptimizationPipeline(content, name, type);
 
-    // 2. Dynamic reasoning advice selection
-    const advice = generateAIRecommendation(originalSizeBytes, huffman, lzw, content);
-
-    // 3. Update state structures
-    setHuffmanResult(huffman);
-    setLzwResult(lzw);
-    setRecommendation(advice);
+    // 2. Update state structures
+    setOptimizationResult(optResult);
     
     setActiveFileMeta({
       name,
@@ -78,6 +69,9 @@ export default function App() {
     setIsProcessing(false);
     setPendingPayload(null);
   };
+
+  const huffmanResult = optimizationResult?.rankedMethods.find(m => m.algorithmName === 'Huffman Coding') as HuffmanResult;
+  const lzwResult = optimizationResult?.rankedMethods.find(m => m.algorithmName === 'LZW') as LzwResult;
 
   return (
     <div className="min-h-screen bg-[#050508] text-slate-100 bg-grid-mesh relative overflow-hidden">
@@ -109,7 +103,7 @@ export default function App() {
             transition={{ duration: 0.4 }}
             className="space-y-12 pb-16"
           >
-            {activeFileMeta && huffmanResult && lzwResult && recommendation && (
+            {activeFileMeta && optimizationResult && huffmanResult && lzwResult && (
               <div className="space-y-10">
                 
                 {/* Section 1: File Info segment */}
@@ -147,11 +141,29 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Section 2: Algorithm result Cards */}
+                {/* Section 2: Best overall optimization recommendation details */}
+                <RecommendationPanel 
+                  optimization={optimizationResult} 
+                  originalSize={activeFileMeta.sizeBytes} 
+                />
+
+                {/* Section 3: Ranked metrics leaderboard table */}
+                <MetricTable 
+                  originalSize={activeFileMeta.sizeBytes} 
+                  rankedMethods={optimizationResult.rankedMethods} 
+                />
+
+                {/* Section 4: Visual Analytics (charts) */}
+                <AnalyticsCharts 
+                  originalSize={activeFileMeta.sizeBytes} 
+                  rankedMethods={optimizationResult.rankedMethods} 
+                />
+
+                {/* Section 5: Side-by-Side Algorithm Cards (remains for detail check) */}
                 <div className="space-y-3">
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <span className="text-[10px] uppercase font-mono tracking-widest text-cyan-400 font-semibold block">
-                      Algorithm Side-by-Side Breakdown
+                      Algorithm Details
                     </span>
                     <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
                       Parallel Codestream Evaluation
@@ -160,32 +172,13 @@ export default function App() {
                   <AlgorithmCard huffman={huffmanResult} lzw={lzwResult} />
                 </div>
 
-                {/* Section 3: Comparative metrics */}
-                <MetricTable 
-                  originalSize={activeFileMeta.sizeBytes} 
-                  huffman={huffmanResult} 
-                  lzw={lzwResult} 
-                />
-
-                {/* Section 4: Visual Analytics (charts) */}
-                <AnalyticsCharts 
-                  originalSize={activeFileMeta.sizeBytes} 
-                  huffman={huffmanResult} 
-                  lzw={lzwResult} 
-                />
-
-                {/* Section 5: AI Recommendation */}
-                <RecommendationPanel recommendation={recommendation} />
-
-                {/* Section 7: Performance Summary Summary KPIs */}
+                {/* Section 6: Performance Summary Summary KPIs */}
                 <KpiMetrics 
                   originalSize={activeFileMeta.sizeBytes} 
-                  huffman={huffmanResult} 
-                  lzw={lzwResult} 
+                  bestMethod={optimizationResult.bestMethod} 
                 />
 
-                {/* Section 6: Algorithm Insights */}
-                <InsightsSection />
+
 
               </div>
             )}

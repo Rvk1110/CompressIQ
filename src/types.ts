@@ -6,38 +6,32 @@ export interface FileMeta {
   timestamp: string;
 }
 
-export interface HuffmanResult {
+export interface CompressionResult {
+  algorithmName: string;
   compressedSizeBytes: number;
   ratio: number;
   spaceSavedPercent: number;
   executionTimeMs: number;
+  encodedPreview: string;
+  complexity: string;
+  isHybrid: boolean;
+  rawData: string;
+}
+
+export interface HuffmanResult extends CompressionResult {
   codeMap: Record<string, string>;
-  encodedPreview: string; // binary string preview
   treeNodeCount: number;
-  complexity: string;
 }
 
-export interface LzwResult {
-  compressedSizeBytes: number;
-  ratio: number;
-  spaceSavedPercent: number;
-  executionTimeMs: number;
+export interface LzwResult extends CompressionResult {
   dictionarySize: number;
-  encodedPreview: string; // comma-separated integer codes preview
   codes: number[];
-  complexity: string;
 }
 
-export interface ComparisonMetrics {
-  originalSizeBytes: number;
-  huffman: HuffmanResult;
-  lzw: LzwResult;
-}
-
-export interface AIRecommendation {
-  bestRatioAlgorithm: 'Huffman' | 'LZW' | 'Tie';
-  fastestAlgorithm: 'Huffman' | 'LZW' | 'Tie';
-  suggestedAlgorithm: 'Huffman' | 'LZW';
+export interface OptimizationRecommendation {
+  bestMethod: CompressionResult;
+  rankedMethods: CompressionResult[];
+  isAlreadyCompressed: boolean;
   explanation: string;
 }
 

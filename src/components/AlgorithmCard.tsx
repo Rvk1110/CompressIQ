@@ -81,12 +81,18 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
               <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
                 Compression Ratio
               </span>
-              <span className="text-lg font-black text-cyan-400 block mt-1 font-mono">
+              <span className={`text-lg font-black block mt-1 font-mono ${huffman.ratio >= 1 ? 'text-cyan-400' : 'text-rose-400'}`}>
                 {huffman.ratio}x
               </span>
-              <span className="text-[10px] font-mono text-emerald-400">
-                {huffman.spaceSavedPercent}% Space Saved
-              </span>
+              {huffman.spaceSavedPercent >= 0 ? (
+                <span className="text-[10px] font-mono text-emerald-400">
+                  {huffman.spaceSavedPercent}% Space Saved
+                </span>
+              ) : (
+                <span className="text-[10px] font-mono text-rose-400 font-bold">
+                  {Math.abs(huffman.spaceSavedPercent)}% Expansion (Inefficient)
+                </span>
+              )}
             </div>
 
             <div className="bg-slate-950/60 border border-white/[0.04] p-3.5 rounded-2xl">
@@ -200,12 +206,18 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
               <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider block">
                 Compression Ratio
               </span>
-              <span className="text-lg font-black text-purple-400 block mt-1 font-mono">
+              <span className={`text-lg font-black block mt-1 font-mono ${lzw.ratio >= 1 ? 'text-purple-400' : 'text-rose-400'}`}>
                 {lzw.ratio}x
               </span>
-              <span className="text-[10px] font-mono text-emerald-400">
-                {lzw.spaceSavedPercent}% Space Saved
-              </span>
+              {lzw.spaceSavedPercent >= 0 ? (
+                <span className="text-[10px] font-mono text-emerald-400">
+                  {lzw.spaceSavedPercent}% Space Saved
+                </span>
+              ) : (
+                <span className="text-[10px] font-mono text-rose-400 font-bold">
+                  {Math.abs(lzw.spaceSavedPercent)}% Expansion (Inefficient)
+                </span>
+              )}
             </div>
 
             <div className="bg-slate-950/60 border border-white/[0.04] p-3.5 rounded-2xl">

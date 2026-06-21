@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
-import { HuffmanResult, LzwResult } from '../types';
+import { CompressionResult } from '../types';
 import { Percent, Flame, Layers2, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface KpiMetricsProps {
   originalSize: number;
-  huffman: HuffmanResult;
-  lzw: LzwResult;
+  bestMethod: CompressionResult;
 }
 
-export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsProps) {
+export default function KpiMetrics({ originalSize, bestMethod }: KpiMetricsProps) {
   // Best results representation
-  const targetSavedPercent = Math.max(huffman.spaceSavedPercent, lzw.spaceSavedPercent);
-  const targetRatio = Math.max(huffman.ratio, lzw.ratio);
-  const totalSavedBytes = Math.max(0, originalSize - Math.min(huffman.compressedSizeBytes, lzw.compressedSizeBytes));
-  // Efficiency ratio can be calculated as compressed size of the best algorithm over original size
-  const targetEfficiency = Number(((1 - (Math.min(huffman.compressedSizeBytes, lzw.compressedSizeBytes) / (originalSize || 1))) * 100).toFixed(2));
-  const targetTime = huffman.executionTimeMs + lzw.executionTimeMs;
+  const targetSavedPercent = bestMethod.spaceSavedPercent;
+  const targetRatio = bestMethod.ratio;
+  const totalSavedBytes = originalSize - bestMethod.compressedSizeBytes;
+  const targetEfficiency = Number(((1 - (bestMethod.compressedSizeBytes / (originalSize || 1))) * 100).toFixed(2));
+  const targetTime = bestMethod.executionTimeMs;
 
   // Animated counters state
   const [efficiency, setEfficiency] = useState(0);
@@ -25,7 +23,6 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    // Basic tick counters representing animated counters
     let start = 0;
     const duration = 1000; // ms
     const startTimeStamp = performance.now();
@@ -33,8 +30,6 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
     const animate = (now: number) => {
       const elapsed = now - startTimeStamp;
       const progress = Math.min(elapsed / duration, 1);
-
-      // Ease out quad
       const easeProgress = progress * (2 - progress);
 
       setEfficiency(Number((targetEfficiency * easeProgress).toFixed(2)));
@@ -45,7 +40,6 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
-        // Guarantee precision final bounds
         setEfficiency(targetEfficiency);
         setSavedPercent(targetSavedPercent);
         setRatio(targetRatio);
@@ -100,11 +94,11 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
               <Layers2 className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-black text-cyan-400 font-sans mt-2">
+          <div className={`text-2xl sm:text-3xl font-black font-sans mt-2 ${savedPercent >= 0 ? 'text-cyan-400' : 'text-rose-400'}`}>
             {savedPercent}%
           </div>
           <p className="text-[10px] text-slate-400 mt-2 font-mono leading-none">
-            Reclaimed {totalSavedBytes.toLocaleString()} bytes
+            {totalSavedBytes >= 0 ? `Reclaimed ${totalSavedBytes.toLocaleString()} bytes` : `Expanded by ${Math.abs(totalSavedBytes).toLocaleString()} bytes`}
           </p>
         </div>
 
@@ -115,7 +109,7 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
               Peak Compression
             </span>
             <div className="p-1.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20">
-              <Flame className="w-4 h-4 animate-bounce" />
+              <Flame className="w-4 h-4 animate-pulse" />
             </div>
           </div>
           <div className="text-2xl sm:text-3xl font-black text-purple-400 font-sans mt-2">
@@ -126,11 +120,11 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
           </p>
         </div>
 
-        {/* KPI 4: Total Benchmark Processing Time */}
+        {/* KPI 4: Processing Time */}
         <div className="glass-card bg-slate-900/40 p-5 rounded-2xl border border-white/[0.04] relative group hover:border-white/[0.1] transition-all">
           <div className="flex justify-between items-center mb-3">
             <span className="text-[10px] text-slate-500 uppercase font-mono tracking-wider">
-              Combined Execution
+              Optimal Latency
             </span>
             <div className="p-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
               <ShieldCheck className="w-4 h-4" />
@@ -140,7 +134,7 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
             {time} ms
           </div>
           <p className="text-[10px] text-slate-400 mt-2 font-mono leading-none">
-            Total latency benchmark
+            Selected algorithm speed
           </p>
         </div>
 
