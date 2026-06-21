@@ -1,0 +1,6 @@
+{
+  "name": "CompressIQ",
+  "description": "Analyze and compare Huffman and LZW compression algorithms based on compression ratio, execution time, and efficiency.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
