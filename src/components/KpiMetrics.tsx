@@ -65,7 +65,7 @@ export default function KpiMetrics({ originalSize, huffman, lzw }: KpiMetricsPro
           Key Performance Indicators
         </span>
         <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-          Section 7: Pipeline Performance Summary
+          Pipeline Performance Summary
         </h2>
       </div>
 

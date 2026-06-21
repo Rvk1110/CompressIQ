@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, FileText, Sparkles, Check, ChevronRight, HelpCircle, Terminal, TableProperties, BookOpen, Binary, AlertCircle } from 'lucide-react';
+import { Upload, FileText, Sparkles, Check, ChevronRight, HelpCircle, Terminal, TableProperties, BookOpen, Binary, AlertCircle, Image as ImageIcon, Video, FileCode } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface UploadSectionProps {
@@ -91,6 +91,8 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
   const [textMode, setTextMode] = useState<boolean>(false);
   const [customText, setCustomText] = useState<string>('');
   const [fileName, setFileName] = useState<string>('');
+  const [fileType, setFileType] = useState<string>('text/plain');
+  const [isBinaryFile, setIsBinaryFile] = useState<boolean>(false);
   const [activePreset, setActivePreset] = useState<string>('repetitive_logs');
   const [warningMessage, setWarningMessage] = useState<string>('');
   
@@ -106,19 +108,41 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
     }
   };
 
-  const processTextLoad = (rawText: string, name: string, type: string) => {
+  const processFile = (file: File) => {
     setWarningMessage('');
-    if (!rawText.trim()) {
-      setWarningMessage('Payload is empty. Please enter printable alphanumeric symbols.');
-      return;
-    }
-    // Safeguard memory bounds for heavy client workloads
-    if (rawText.length > 500000) {
-      setWarningMessage('File exceeds 500KB. It has been truncated to avoid rendering latency.');
-      rawText = rawText.substring(0, 500000);
-    }
-    setCustomText(rawText);
-    setFileName(name);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const arrayBuffer = event.target?.result as ArrayBuffer;
+      const bytes = new Uint8Array(arrayBuffer);
+      
+      const maxBytes = 1500000;
+      const len = Math.min(bytes.length, maxBytes);
+      if (bytes.length > maxBytes) {
+        setWarningMessage(`File is large (${(bytes.length / 1000000).toFixed(2)}MB). Compressing the first 1.5MB to preserve performance.`);
+      }
+
+      let binary = '';
+      const chunkSize = 65536;
+      for (let i = 0; i < len; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, Array.from(chunk));
+      }
+
+      const isText = file.type.startsWith('text/') || 
+                     file.name.endsWith('.txt') || 
+                     file.name.endsWith('.csv') || 
+                     file.name.endsWith('.json') || 
+                     file.name.endsWith('.xml') ||
+                     file.name.endsWith('.md');
+
+      setCustomText(binary);
+      setFileName(file.name);
+      setFileType(file.type || 'application/octet-stream');
+      setIsBinaryFile(!isText);
+      setTextMode(true);
+      setActivePreset('');
+    };
+    reader.readAsArrayBuffer(file);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -127,34 +151,13 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
     setDragActive(false);
 
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      const extension = file.name.split('.').pop()?.toLowerCase();
-      if (extension === 'txt' || extension === 'csv' || file.type === 'text/plain' || file.type === 'text/csv') {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const result = event.target?.result as string;
-          processTextLoad(result, file.name, file.type || 'text/plain');
-          setTextMode(true);
-          setActivePreset('');
-        };
-        reader.readAsText(file);
-      } else {
-        setWarningMessage('Formats restricted strictly to .txt and .csv character documents.');
-      }
+      processFile(e.dataTransfer.files[0]);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        processTextLoad(result, file.name, file.type || 'text/plain');
-        setTextMode(true);
-        setActivePreset('');
-      };
-      reader.readAsText(file);
+      processFile(e.target.files[0]);
     }
   };
 
@@ -162,6 +165,8 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
     setWarningMessage('');
     setCustomText(preset.content);
     setFileName(`preset_${preset.key}.${preset.type === 'text/csv' ? 'csv' : 'txt'}`);
+    setFileType(preset.type);
+    setIsBinaryFile(false);
     setActivePreset(preset.key);
     setTextMode(false);
   };
@@ -224,7 +229,7 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
               id="file-upload-input"
               ref={fileInputRef}
               type="file" 
-              accept=".txt,.csv" 
+              accept="*" 
               className="hidden" 
               onChange={handleFileChange}
             />
@@ -238,7 +243,7 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
                 Drag & Drop custom analysis files here
               </h4>
               <p className="text-xs text-slate-400 mt-1 max-w-sm">
-                Supports standard <span className="text-cyan-400">.txt (Text)</span> and <span className="text-cyan-400">.csv (Comma-Separated Grid)</span> character maps. Large documents will be scaled.
+                Supports standard documents, PDFs, Word files, images, video, and audio payloads. Large assets will compile instantly using safe buffer limits.
               </p>
 
               <div className="flex flex-wrap gap-3 items-center justify-center mt-6">
@@ -283,7 +288,7 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
             )}
           </AnimatePresence>
 
-          {/* Textarea Editor Option */}
+          {/* Textarea Editor or Binary Info Panel Option */}
           {textMode && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -302,18 +307,47 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
                 </div>
               </div>
 
-              <textarea
-                id="custom-text-analyzer-box"
-                value={customText}
-                onChange={(e) => {
-                  setCustomText(e.target.value);
-                  setFileName('custom_clipboard_input.txt');
-                  setActivePreset('');
-                }}
-                placeholder="Type or paste high frequency text, source code files, custom CSV tables or symbols..."
-                rows={7}
-                className="w-full bg-slate-950/60 text-slate-200 text-xs font-mono p-4 rounded-xl border border-white/[0.05] focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 transition-all resize-y"
-              />
+              {isBinaryFile ? (
+                <div className="bg-slate-950/60 p-6 rounded-xl border border-white/[0.05] flex flex-col items-center justify-center text-center space-y-3">
+                  <div className="p-3 bg-cyan-500/10 rounded-full border border-cyan-500/20 text-cyan-400">
+                    {fileType.startsWith('image/') ? <ImageIcon className="w-8 h-8" /> : 
+                     fileType.startsWith('video/') ? <Video className="w-8 h-8" /> : 
+                     fileType.includes('pdf') ? <FileText className="w-8 h-8" /> : 
+                     <FileCode className="w-8 h-8" />}
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-white text-sm">{fileName}</h5>
+                    <p className="text-xs text-slate-400 mt-1 font-mono">
+                      {fileType} — {customText.length.toLocaleString()} byte buffer loaded
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setCustomText('');
+                      setFileName('');
+                      setIsBinaryFile(false);
+                    }}
+                    className="text-xs font-mono text-red-400 hover:text-red-300 underline cursor-pointer"
+                  >
+                    Remove File
+                  </button>
+                </div>
+              ) : (
+                <textarea
+                  id="custom-text-analyzer-box"
+                  value={customText}
+                  onChange={(e) => {
+                    setCustomText(e.target.value);
+                    setFileName('custom_clipboard_input.txt');
+                    setFileType('text/plain');
+                    setIsBinaryFile(false);
+                    setActivePreset('');
+                  }}
+                  placeholder="Type or paste high frequency text, source code files, custom CSV tables or symbols..."
+                  rows={7}
+                  className="w-full bg-slate-950/60 text-slate-200 text-xs font-mono p-4 rounded-xl border border-white/[0.05] focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 transition-all resize-y"
+                />
+              )}
             </motion.div>
           )}
         </div>
@@ -378,11 +412,7 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
               id="compress-and-compare-btn"
               disabled={isProcessing}
               onClick={handleTriggerAnalysis}
-              className={`w-full py-4.5 px-6 rounded-2xl relative overflow-hidden group font-sans font-bold text-sm tracking-wide text-white shadow-lg shadow-cyan-500/10 cursor-pointer active:scale-98 transition-all ${
-                isProcessing 
-                  ? 'opacity-80 pointer-events-none' 
-                  : 'bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600'
-              }`}
+              className={`w-full py-4.5 px-6 rounded-2xl relative overflow-hidden group font-sans font-bold text-sm tracking-wide text-white shadow-lg shadow-cyan-500/10 cursor-pointer active:scale-98 transition-all bg-cyan-600 hover:bg-cyan-500`}
             >
               {/* Inner glow mask */}
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -391,9 +421,6 @@ export default function UploadSection({ onAnalyze, isProcessing }: UploadSection
                 <Sparkles className="w-5 h-5 text-cyan-300 fill-cyan-400/20 animate-pulse shrink-0" />
                 <span className="font-sans">COMPRESS & ANALYZE PERFORMANCE</span>
               </div>
-              
-              {/* Absolute glowing line */}
-              <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-cyan-400 via-transparent to-purple-400 animate-pulse" />
             </button>
           </div>
 

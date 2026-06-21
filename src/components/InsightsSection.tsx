@@ -15,7 +15,7 @@ export default function InsightsSection() {
           Algorithmic Mechanism Explanations
         </span>
         <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-          Section 6: Deep Dive Algorithmic Mechanics
+          Deep Dive Algorithmic Mechanics
         </h2>
       </div>
 

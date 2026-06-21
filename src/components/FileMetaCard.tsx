@@ -23,8 +23,6 @@ export default function FileMetaCard({ meta }: FileMetaCardProps) {
       transition={{ duration: 0.4 }}
       className="glass-card glass-card-hover rounded-3xl p-6 relative overflow-hidden"
     >
-      {/* Visual background gradient accents */}
-      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-cyan-500/10 to-transparent pointer-events-none rounded-tr-3xl" />
 
       {/* Title block */}
       <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4 mb-5">

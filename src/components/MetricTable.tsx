@@ -38,7 +38,7 @@ export default function MetricTable({ originalSize, huffman, lzw }: MetricTableP
             Comparative Grid Matrix
           </span>
           <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-            Section 3: Competitive Pipeline Performance
+            Detailed Performance Metrics
           </h2>
         </div>
         <div className="flex items-center gap-2 bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/25 text-[11px] font-mono text-emerald-400 font-medium">
@@ -48,7 +48,7 @@ export default function MetricTable({ originalSize, huffman, lzw }: MetricTableP
       </div>
 
       {/* Modern SaaS Table Style */}
-      <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-slate-950/40 backdrop-blur-xl">
+      <div className="overflow-x-auto rounded-2xl border border-white/[0.06] bg-slate-950/40 backdrop-blur-xl">
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-white/[0.08] bg-white/[0.01]">

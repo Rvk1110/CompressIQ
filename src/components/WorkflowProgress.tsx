@@ -12,7 +12,7 @@ const STAGES = [
   { label: 'Calculating Compression Ratio', sub: 'Comparing bit budgets against native byte representation' },
   { label: 'Applying LZW Compression', sub: 'Initializing 256 basic ASCII tokens & filling dictionary bounds' },
   { label: 'Measuring Execution Time', sub: 'Averaging benchmark loops via performance.now()' },
-  { label: 'Generating Comparative Analysis', sub: 'Fusing metrics into AI dynamic recommendations' },
+  { label: 'Generating Comparative Analysis', sub: 'Fusing metrics into algorithmic recommendations' },
 ];
 
 export default function WorkflowProgress({ onComplete }: WorkflowProgressProps) {
@@ -85,7 +85,7 @@ export default function WorkflowProgress({ onComplete }: WorkflowProgressProps) 
         {/* Big Premium fluid progress bar */}
         <div className="w-full h-2 bg-slate-950 rounded-full my-8 relative overflow-hidden border border-white/[0.05]">
           <div 
-            className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full transition-all duration-100" 
+            className="h-full bg-cyan-500 rounded-full transition-all duration-100" 
             style={{ width: `${progress}%` }} 
           />
           {/* Subtle slide sheen */}

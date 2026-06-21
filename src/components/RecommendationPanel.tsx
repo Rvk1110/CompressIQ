@@ -1,5 +1,5 @@
 import { AIRecommendation } from '../types';
-import { Sparkles, Trophy, Shuffle, Compass } from 'lucide-react';
+import { Trophy, Shuffle, Compass } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface RecommendationPanelProps {
@@ -15,10 +15,10 @@ export default function RecommendationPanel({ recommendation }: RecommendationPa
       {/* Title */}
       <div className="mb-6">
         <span className="text-[10px] uppercase font-mono tracking-widest text-cyan-400 font-semibold block">
-          Intelligent Algorithmic Suggestions
+          Algorithmic Decision Matrix
         </span>
         <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-          Section 5: AI Architectural Decision Matrix
+          Recommended Algorithm & Strategy Analysis
         </h2>
       </div>
 
@@ -27,28 +27,25 @@ export default function RecommendationPanel({ recommendation }: RecommendationPa
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="relative rounded-3xl p-6 sm:p-10 glow-premium bg-gradient-to-br from-emerald-500/20 via-slate-900/40 to-slate-900/40 border border-emerald-500/30 backdrop-blur-md overflow-hidden"
+        className="relative rounded-3xl p-6 sm:p-10 bg-slate-900/60 border border-white/[0.08] backdrop-blur-md overflow-hidden"
       >
-        {/* Animated backdrop light orbs */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 relative z-10">
           
           {/* Main Badge Block */}
           <div className="space-y-4 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 text-xs font-mono font-medium shadow-md">
-              <Sparkles className="w-3.5 h-3.5 text-purple-300 animate-spin" />
+              <Trophy className="w-3.5 h-3.5 text-purple-300 animate-pulse" />
               <span>Recommended Algorithm</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-black text-white leading-none">
               {recommendation.suggestedAlgorithm === 'Huffman' ? (
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-blue-500 bg-clip-text text-transparent">
+                <span className="text-cyan-400">
                   Huffman Encoder
                 </span>
               ) : (
-                <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-pink-500 bg-clip-text text-transparent">
+                <span className="text-purple-400">
                   LZW Dictionary
                 </span>
               )}
@@ -105,7 +102,7 @@ export default function RecommendationPanel({ recommendation }: RecommendationPa
             <span>Optimal transmission payload achieved via {recommendation.suggestedAlgorithm} dynamic compression.</span>
           </span>
           <span className="text-cyan-400 font-semibold px-2 py-0.5 rounded bg-cyan-400/10 border border-cyan-400/25 w-fit">
-            AI_RECOMMENDATION_SUCCESS
+            RECOMMENDATION_ENGINE_SUCCESS
           </span>
         </div>
 

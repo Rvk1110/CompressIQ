@@ -23,14 +23,14 @@ export default function AnalyticsCharts({ originalSize, huffman, lzw }: Analytic
   
   // Data for Chart 1: Compression Ratio Comparison
   const ratioData = [
-    { name: 'Huffman Coding', ratio: huffman.ratio, fillCode: 'url(#cyanBlueGrad)' },
-    { name: 'LZW Algorithm', ratio: lzw.ratio, fillCode: 'url(#purplePinkGrad)' },
+    { name: 'Huffman Coding', ratio: huffman.ratio, fillCode: '#06b6d4' },
+    { name: 'LZW Algorithm', ratio: lzw.ratio, fillCode: '#a855f7' },
   ];
 
   // Data for Chart 2: Execution Time Comparison (ms)
   const timeData = [
-    { name: 'Huffman Coding', timeMs: huffman.executionTimeMs, fillCode: 'url(#cyanBlueGrad)' },
-    { name: 'LZW Algorithm', timeMs: lzw.executionTimeMs, fillCode: 'url(#purplePinkGrad)' },
+    { name: 'Huffman Coding', timeMs: huffman.executionTimeMs, fillCode: '#06b6d4' },
+    { name: 'LZW Algorithm', timeMs: lzw.executionTimeMs, fillCode: '#a855f7' },
   ];
 
   // Data for Chart 3: Original Size vs Compressed Size (bytes)
@@ -76,7 +76,7 @@ export default function AnalyticsCharts({ originalSize, huffman, lzw }: Analytic
           Visual Diagnostic Charts
         </span>
         <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-          Section 4: Decoded Compression Metrics Visualizer
+          Compression Metrics Visualizer
         </h2>
       </div>
 
@@ -100,17 +100,6 @@ export default function AnalyticsCharts({ originalSize, huffman, lzw }: Analytic
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={ratioData} margin={{ top: 20, right: 10, left: -20, bottom: 5 }}>
-                <defs>
-                  {/* SVG Gradient definitions */}
-                  <linearGradient id="cyanBlueGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#06b6d4" />
-                    <stop offset="100%" stopColor="#3b82f6" />
-                  </linearGradient>
-                  <linearGradient id="purplePinkGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#a855f7" />
-                    <stop offset="100%" stopColor="#ec4899" />
-                  </linearGradient>
-                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
                 <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" fontSize={10} tickLine={false} />
                 <YAxis stroke="rgba(255,255,255,0.4)" fontSize={10} tickLine={false} unit="x" />
@@ -179,12 +168,6 @@ export default function AnalyticsCharts({ originalSize, huffman, lzw }: Analytic
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={sizeData} margin={{ top: 25, right: 10, left: -25, bottom: 5 }}>
-                <defs>
-                  <linearGradient id="origSizeGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#475569" />
-                    <stop offset="100%" stopColor="#1e293b" />
-                  </linearGradient>
-                </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
                 <XAxis dataKey="name" stroke="none" hide />
                 <YAxis stroke="rgba(255,255,255,0.4)" fontSize={10} tickLine={false} unit="B" />
@@ -196,9 +179,9 @@ export default function AnalyticsCharts({ originalSize, huffman, lzw }: Analytic
                   iconSize={8}
                   wrapperStyle={{ fontSize: '9px', fontFamily: 'monospace', opacity: 0.7 }}
                 />
-                <Bar dataKey="Original Payload Size" fill="url(#origSizeGrad)" radius={[6, 6, 0, 0]} unit=" Bytes" />
-                <Bar dataKey="Huffman Coding" fill="url(#cyanBlueGrad)" radius={[6, 6, 0, 0]} unit=" Bytes" />
-                <Bar dataKey="LZW Algorithm" fill="url(#purplePinkGrad)" radius={[6, 6, 0, 0]} unit=" Bytes" />
+                <Bar dataKey="Original Payload Size" fill="#475569" radius={[6, 6, 0, 0]} unit=" Bytes" />
+                <Bar dataKey="Huffman Coding" fill="#06b6d4" radius={[6, 6, 0, 0]} unit=" Bytes" />
+                <Bar dataKey="LZW Algorithm" fill="#a855f7" radius={[6, 6, 0, 0]} unit=" Bytes" />
               </BarChart>
             </ResponsiveContainer>
           </div>

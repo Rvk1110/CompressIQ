@@ -81,9 +81,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#050508] text-slate-100 bg-grid-mesh relative overflow-hidden">
-      {/* Background Ambient Glows */}
-      <div className="absolute top-[-5%] left-[-5%] w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[110px] pointer-events-none z-0" />
-      <div className="absolute bottom-[10%] right-[-5%] w-[450px] h-[450px] bg-purple-600/10 rounded-full blur-[110px] pointer-events-none z-0" />
       
       {/* 1. Header Segment */}
       <Header />
@@ -122,7 +119,7 @@ export default function App() {
                       Dataset Scope Metadata
                     </span>
                     <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-                      Section 1: Active Document Footprint
+                      Active Document Footprint
                     </h2>
                   </div>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -157,7 +154,7 @@ export default function App() {
                       Algorithm Side-by-Side Breakdown
                     </span>
                     <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-sans">
-                      Section 2: Parallel Codestream Evaluation
+                      Parallel Codestream Evaluation
                     </h2>
                   </div>
                   <AlgorithmCard huffman={huffmanResult} lzw={lzwResult} />

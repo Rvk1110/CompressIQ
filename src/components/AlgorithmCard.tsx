@@ -36,10 +36,6 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
         transition={{ duration: 0.5 }}
         className="glass-card-blue rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group select-none glow-cyan"
       >
-        {/* Background Gradients */}
-        <div className="absolute -top-10 -right-10 w-44 h-44 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/15 transition-all duration-500 pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
-
         <div>
           {/* Header row */}
           <div className="flex justify-between items-start gap-4 mb-6">
@@ -159,10 +155,6 @@ export default function AlgorithmCard({ huffman, lzw }: AlgorithmCardProps) {
         transition={{ duration: 0.5 }}
         className="glass-card-purple rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group select-none glow-purple"
       >
-        {/* Background Gradients */}
-        <div className="absolute -top-10 -right-10 w-44 h-44 bg-purple-500/10 rounded-full blur-2xl group-hover:bg-purple-500/15 transition-all duration-500 pointer-events-none" />
-        <div className="absolute -bottom-10 -left-10 w-44 h-44 bg-pink-500/5 rounded-full blur-2xl pointer-events-none" />
-
         <div>
           {/* Header row */}
           <div className="flex justify-between items-start gap-4 mb-6">
