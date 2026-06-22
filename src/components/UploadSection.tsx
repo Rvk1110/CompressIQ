@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, FileText, Sparkles, Check, ChevronRight, HELP_Icon, Terminal, TableProperties, BookOpen, Binary, AlertCircle, Image as ImageIcon, Video, FileCode, RefreshCw } from 'lucide-react';
+import { Upload, FileText, Sparkles, Check, ChevronRight, Terminal, TableProperties, BookOpen, Binary, AlertCircle, Image as ImageIcon, Video, FileCode, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FileMeta } from '../types';
 import WorkflowProgress from './WorkflowProgress';

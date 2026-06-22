@@ -1,5 +1,5 @@
 import { OptimizationRecommendation } from '../types';
-import { Trophy, Copy, Check, Download, AlertTriangle, Cpu, Layers } from 'lucide-react';
+import { Trophy, Copy, Check, Download, AlertTriangle, Cpu, Layers, Database, TrendingDown, TrendingUp, Zap, Percent, Timer } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 
@@ -60,7 +60,7 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
               isInefficient ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
             }`}>
               <Trophy className={`w-3.5 h-3.5 ${isInefficient ? 'text-rose-300' : 'text-emerald-300 animate-pulse'}`} />
-              <span>🏆 Recommended Algorithm for Dataset</span>
+              <span>Recommended Algorithm for Dataset</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-black text-white leading-none">
@@ -88,55 +88,95 @@ export default function RecommendationPanel({ optimization, originalSize }: Reco
           <div className="grid grid-cols-2 gap-4 w-full lg:w-96 shrink-0">
             
             {/* Original Size Card */}
-            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between">
-              <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                📦 Dataset Original Size
-              </span>
-              <div className="text-base font-bold text-slate-200 mt-2 font-sans">
+            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between hover:border-white/[0.1] transition-all duration-300">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
+                  Original Size
+                </span>
+                <div className="p-1 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                  <Database className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <div className="text-base font-bold text-slate-200 mt-3 font-sans">
                 {formatBytes(originalSize)}
                 <span className="text-[9px] text-slate-500 block font-mono">{originalSize.toLocaleString()} bytes</span>
               </div>
             </div>
 
             {/* Compressed Size Card */}
-            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between">
-              <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                📉 Equivalent Size Post-Analysis
-              </span>
-              <div className={`text-base font-bold mt-2 font-sans ${isInefficient ? 'text-rose-400' : 'text-emerald-400'}`}>
+            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between hover:border-white/[0.1] transition-all duration-300">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
+                  Post-Analysis Size
+                </span>
+                <div className={`p-1 rounded-lg border ${
+                  isInefficient 
+                    ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' 
+                    : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                }`}>
+                  {isInefficient ? (
+                    <TrendingUp className="w-3.5 h-3.5" />
+                  ) : (
+                    <TrendingDown className="w-3.5 h-3.5" />
+                  )}
+                </div>
+              </div>
+              <div className={`text-base font-bold mt-3 font-sans ${isInefficient ? 'text-rose-400' : 'text-emerald-400'}`}>
                 {formatBytes(bestMethod.compressedSizeBytes)}
                 <span className="text-[9px] text-slate-500 block font-mono">{bestMethod.compressedSizeBytes.toLocaleString()} bytes</span>
               </div>
             </div>
 
             {/* Ratio Card */}
-            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between">
-              <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                📊 Compression Ratio
-              </span>
-              <div className={`text-base font-bold mt-2 font-mono ${bestMethod.ratio >= 1.0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between hover:border-white/[0.1] transition-all duration-300">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
+                  Compression Ratio
+                </span>
+                <div className={`p-1 rounded-lg border ${
+                  bestMethod.ratio >= 1.0 
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                    : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                }`}>
+                  <Zap className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <div className={`text-base font-bold mt-3 font-mono ${bestMethod.ratio >= 1.0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {bestMethod.ratio}x
               </div>
             </div>
 
             {/* Space Saved Card */}
-            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between">
-              <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                💾 Space Saved (%)
-              </span>
-              <div className={`text-base font-bold mt-2 font-mono ${bestMethod.spaceSavedPercent >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between hover:border-white/[0.1] transition-all duration-300">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
+                  Space Saved (%)
+                </span>
+                <div className={`p-1 rounded-lg border ${
+                  bestMethod.spaceSavedPercent >= 0 
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
+                    : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                }`}>
+                  <Percent className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <div className={`text-base font-bold mt-3 font-mono ${bestMethod.spaceSavedPercent >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {bestMethod.spaceSavedPercent}%
               </div>
             </div>
 
             {/* Time Card */}
-            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between col-span-2">
-              <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
-                ⚡ Execution Time
-              </span>
-              <div className="text-base font-bold text-slate-200 mt-2 font-mono flex items-center gap-2">
-                <Cpu className="w-4 h-4 text-cyan-400" />
-                <span>{bestMethod.executionTimeMs} ms</span>
+            <div className="bg-slate-950/70 border border-white/[0.05] p-4 rounded-2xl flex flex-col justify-between col-span-2 hover:border-white/[0.1] transition-all duration-300">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
+                  Execution Time
+                </span>
+                <div className="p-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <Timer className="w-3.5 h-3.5" />
+                </div>
+              </div>
+              <div className="text-base font-bold text-slate-200 mt-3 font-mono">
+                {bestMethod.executionTimeMs} ms
               </div>
             </div>
 
