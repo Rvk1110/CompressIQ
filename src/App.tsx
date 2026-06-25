@@ -6,7 +6,6 @@ import MetricTable from './components/MetricTable';
 import AnalyticsCharts from './components/AnalyticsCharts';
 import RecommendationPanel from './components/RecommendationPanel';
 import KpiMetrics from './components/KpiMetrics';
-import InsightsSection from './components/InsightsSection';
 import Footer from './components/Footer';
 
 import { runOptimizationPipeline } from './utils/compressor';
@@ -139,9 +138,6 @@ export default function App() {
                 originalSize={activeFileMeta.sizeBytes} 
                 bestMethod={optimizationResult.bestMethod} 
               />
-
-              {/* Section 6: Educational Deep-Dive Insights */}
-              <InsightsSection />
 
             </div>
           </motion.main>
