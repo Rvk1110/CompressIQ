@@ -19,6 +19,7 @@ export default function KpiMetrics({ originalSize, bestMethod }: KpiMetricsProps
   // Animated counters state
   const [efficiency, setEfficiency] = useState(0);
   const [savedPercent, setSavedPercent] = useState(0);
+  const [savedBytes, setSavedBytes] = useState(0);
   const [ratio, setRatio] = useState(0);
   const [time, setTime] = useState(0);
 
@@ -34,6 +35,7 @@ export default function KpiMetrics({ originalSize, bestMethod }: KpiMetricsProps
 
       setEfficiency(Number((targetEfficiency * easeProgress).toFixed(2)));
       setSavedPercent(Number((targetSavedPercent * easeProgress).toFixed(2)));
+      setSavedBytes(Number((totalSavedBytes * easeProgress).toFixed(0)));
       setRatio(Number((1 + (targetRatio - 1) * easeProgress).toFixed(2)));
       setTime(Number((targetTime * easeProgress).toFixed(3)));
 
@@ -42,13 +44,14 @@ export default function KpiMetrics({ originalSize, bestMethod }: KpiMetricsProps
       } else {
         setEfficiency(targetEfficiency);
         setSavedPercent(targetSavedPercent);
+        setSavedBytes(totalSavedBytes);
         setRatio(targetRatio);
         setTime(targetTime);
       }
     };
 
     requestAnimationFrame(animate);
-  }, [targetEfficiency, targetSavedPercent, targetRatio, targetTime]);
+  }, [targetEfficiency, targetSavedPercent, targetRatio, targetTime, totalSavedBytes]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 py-4 select-none">
@@ -94,11 +97,11 @@ export default function KpiMetrics({ originalSize, bestMethod }: KpiMetricsProps
               <Layers2 className="w-4 h-4" />
             </div>
           </div>
-          <div className={`text-2xl sm:text-3xl font-black font-sans mt-2 ${savedPercent >= 0 ? 'text-cyan-400' : 'text-rose-400'}`}>
-            {savedPercent}%
+          <div className={`text-2xl sm:text-3xl font-black font-sans mt-2 ${savedBytes >= 0 ? 'text-cyan-400' : 'text-rose-400'}`}>
+            {savedBytes >= 0 ? `${savedBytes.toLocaleString()} B` : `${savedBytes.toLocaleString()} B`}
           </div>
           <p className="text-[10px] text-slate-400 mt-2 font-mono leading-none">
-            {totalSavedBytes >= 0 ? `Reclaimed ${totalSavedBytes.toLocaleString()} bytes` : `Expanded by ${Math.abs(totalSavedBytes).toLocaleString()} bytes`}
+            {savedPercent >= 0 ? `${savedPercent}% space reduction` : `${Math.abs(savedPercent)}% size expansion`}
           </p>
         </div>
 
