@@ -131,9 +131,6 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
       const maxBytes = 1500000;
       const len = Math.min(bytes.length, maxBytes);
       let warning = '';
-      if (bytes.length > maxBytes) {
-        warning += `File is large (${(bytes.length / 1000000).toFixed(2)}MB). Compressing the first 1.5MB to preserve performance. `;
-      }
       const isAlreadyCompressedImage = file.name.endsWith('.png') || 
                                        file.name.endsWith('.jpg') || 
                                        file.name.endsWith('.jpeg') || 

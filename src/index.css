@@ -112,29 +112,28 @@ body {
   background: #94a3b8;
 }
 
-/* Force light mode readability on dark class names */
 .text-white {
-  color: #0f172a !important;
+  color: #0d121d !important;
 }
 
 .text-slate-100 {
-  color: #1e293b !important;
+  color: #0d121d !important;
 }
 
 .text-slate-200 {
-  color: #334155 !important;
+  color: #1a2238 !important;
 }
 
 .text-slate-300 {
-  color: #475569 !important;
+  color: #2e3852 !important;
 }
 
 .text-slate-400 {
-  color: #64748b !important;
+  color: #3b486d !important;
 }
 
 .text-slate-500 {
-  color: #94a3b8 !important;
+  color: #4b5880 !important;
 }
 
 .text-pink-400 {
