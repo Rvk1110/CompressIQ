@@ -144,6 +144,10 @@ body {
   background-color: #ffffff !important;
 }
 
+[class*="bg-slate-800"] {
+  background-color: #f1f5f9 !important;
+}
+
 .bg-cyan-950\/20 {
   background-color: rgba(217, 119, 6, 0.08) !important;
 }

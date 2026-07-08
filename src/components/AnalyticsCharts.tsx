@@ -25,21 +25,21 @@ export default function AnalyticsCharts({ originalSize, rankedMethods }: Analyti
     name: m.algorithmName.replace(' Coding', ''),
     'Compressed Size (Bytes)': m.compressedSizeBytes,
     isBest: m.algorithmName === rankedMethods[0].algorithmName,
-    fillCode: m.algorithmName === rankedMethods[0].algorithmName ? '#10b981' : '#3b82f6'
+    fillCode: m.algorithmName === rankedMethods[0].algorithmName ? '#10b981' : '#d97706'
   }));
 
   // Chart 2: Ratio Comparison (x)
-  const ratioData = [...rankedMethods].sort((a, b) => b.ratio - a.ratio).map(m => ({
+  const ratioData = [...rankedMethods].sort((a, b) => b.ratio - a.ratio).map((m, idx) => ({
     name: m.algorithmName.replace(' Coding', ''),
     'Ratio': m.ratio,
-    fillCode: m.algorithmName === rankedMethods[0].algorithmName ? '#10b981' : '#a855f7'
+    fillCode: idx === 0 ? '#10b981' : '#d97706'
   }));
 
   // Chart 3: Processing Time (ms)
-  const latencyData = [...rankedMethods].sort((a, b) => a.executionTimeMs - b.executionTimeMs).map(m => ({
+  const latencyData = [...rankedMethods].sort((a, b) => a.executionTimeMs - b.executionTimeMs).map((m, idx) => ({
     name: m.algorithmName.replace(' Coding', ''),
     'Latency (ms)': m.executionTimeMs,
-    fillCode: '#06b6d4'
+    fillCode: idx === 0 ? '#10b981' : '#d97706'
   }));
 
   const CustomTooltip = ({ active, payload, label }: any) => {
