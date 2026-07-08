@@ -137,6 +137,10 @@ body {
   color: #94a3b8 !important;
 }
 
+.text-pink-400 {
+  color: #db2777 !important;
+}
+
 [class*="bg-slate-950"], [class*="bg-slate-900"] {
   background-color: #ffffff !important;
 }
