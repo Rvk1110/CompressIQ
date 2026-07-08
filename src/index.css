@@ -140,6 +140,18 @@ body {
   color: #db2777 !important;
 }
 
+.text-rose-100, .text-rose-200, .text-rose-300, .text-rose-400, .text-rose-500 {
+  color: #9f1239 !important;
+}
+
+.text-emerald-100, .text-emerald-200, .text-emerald-300, .text-emerald-400, .text-emerald-500 {
+  color: #065f46 !important;
+}
+
+.text-cyan-100, .text-cyan-200, .text-cyan-300, .text-cyan-400, .text-cyan-500 {
+  color: #9a3412 !important;
+}
+
 [class*="bg-slate-950"], [class*="bg-slate-900"] {
   background-color: #ffffff !important;
 }
