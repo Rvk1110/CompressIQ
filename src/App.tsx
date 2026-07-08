@@ -28,9 +28,9 @@ export default function App() {
   // Temporary staging buffer during workflow loading sequence
   const [pendingPayload, setPendingPayload] = useState<{ name: string; content: string; type: string } | null>(null);
 
-  // Parse and set default logs analysis on mount so dashboard doesn't start empty
+  // Let the dashboard start in a clean initial state awaiting user selection/upload
   useEffect(() => {
-    runAnalysisPipeline('preset_repetitive_logs.txt', INITIAL_CONTENT, 'text/plain');
+    // No automatic run on mount to start with a clean dashboard
   }, []);
 
   const runAnalysisPipeline = (name: string, content: string, type: string) => {
@@ -72,7 +72,7 @@ export default function App() {
   const lzwResult = optimizationResult?.rankedMethods.find(m => m.algorithmName === 'LZW') as LzwResult;
 
   return (
-    <div className="min-h-screen bg-[#050508] text-slate-100 bg-grid-mesh relative overflow-hidden">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 bg-grid-mesh relative overflow-hidden">
       
       {/* 1. Header Segment */}
       <Header />

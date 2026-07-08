@@ -217,7 +217,7 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
       }
       finalPayloadContent = customText;
       finalPayloadName = fileName || 'custom_clipboard_input.txt';
-      finalPayloadType = finalPayloadName.endsWith('.csv') ? 'text/csv' : 'text/plain';
+      finalPayloadType = fileType;
     } else {
       const selected = PRESETS.find(p => p.key === activePreset);
       if (selected) {
@@ -287,7 +287,13 @@ export default function UploadSection({ onAnalyze, isProcessing, activeFileMeta,
                   <div>
                     <span className="text-slate-500 block text-[9px] uppercase tracking-wider">Dataset Type</span>
                     <span className="text-slate-300 font-semibold truncate block mt-0.5">
-                      {activeFileMeta.type === 'text/csv' ? 'CSV Matrix' : 'Text Sequence'}
+                      {activeFileMeta.type === 'text/csv' ? 'CSV Matrix' : 
+                       activeFileMeta.type.startsWith('image/') ? 'Image Data (Binary)' : 
+                       activeFileMeta.type.startsWith('video/') ? 'Video Data (Binary)' :
+                       activeFileMeta.type.startsWith('audio/') ? 'Audio Data (Binary)' :
+                       activeFileMeta.type.includes('pdf') ? 'PDF Document (Binary)' :
+                       activeFileMeta.type.includes('octet-stream') ? 'Binary Stream' :
+                       'Text Sequence'}
                     </span>
                   </div>
                   <div>

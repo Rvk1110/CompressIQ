@@ -45,7 +45,7 @@ export default function AnalyticsCharts({ originalSize, rankedMethods }: Analyti
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-950/95 backdrop-blur-md border border-white/[0.08] px-4 py-3 rounded-xl shadow-2xl font-mono text-xs">
+        <div className="bg-white/95 backdrop-blur-md border border-slate-200 px-4 py-3 rounded-xl shadow-2xl font-mono text-xs">
           <p className="text-slate-400 mb-1.5 font-bold uppercase tracking-wider">{label || 'Value'}</p>
           <div className="space-y-1">
             {payload.map((item: any, idx: number) => (
@@ -96,10 +96,10 @@ export default function AnalyticsCharts({ originalSize, rankedMethods }: Analyti
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={footprintData} margin={{ top: 20, right: 10, left: -25, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
-                <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" fontSize={8} tickLine={false} />
-                <YAxis stroke="rgba(255,255,255,0.4)" fontSize={9} tickLine={false} />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.01)' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                <XAxis dataKey="name" stroke="rgba(15,23,42,0.5)" fontSize={8} tickLine={false} />
+                <YAxis stroke="rgba(15,23,42,0.5)" fontSize={9} tickLine={false} />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
                 <Bar dataKey="Compressed Size (Bytes)" radius={[6, 6, 0, 0]}>
                   {footprintData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fillCode} />
@@ -130,10 +130,10 @@ export default function AnalyticsCharts({ originalSize, rankedMethods }: Analyti
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={ratioData} margin={{ top: 20, right: 10, left: -25, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
-                <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" fontSize={8} tickLine={false} />
-                <YAxis stroke="rgba(255,255,255,0.4)" fontSize={9} tickLine={false} unit="x" />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.01)' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                <XAxis dataKey="name" stroke="rgba(15,23,42,0.5)" fontSize={8} tickLine={false} />
+                <YAxis stroke="rgba(15,23,42,0.5)" fontSize={9} tickLine={false} unit="x" />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
                 <Bar dataKey="Ratio" radius={[6, 6, 0, 0]}>
                   {ratioData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fillCode} />
@@ -164,10 +164,10 @@ export default function AnalyticsCharts({ originalSize, rankedMethods }: Analyti
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={latencyData} margin={{ top: 25, right: 10, left: -25, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
-                <XAxis dataKey="name" stroke="rgba(255,255,255,0.4)" fontSize={8} tickLine={false} />
-                <YAxis stroke="rgba(255,255,255,0.4)" fontSize={9} tickLine={false} unit="ms" />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.01)' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
+                <XAxis dataKey="name" stroke="rgba(15,23,42,0.5)" fontSize={8} tickLine={false} />
+                <YAxis stroke="rgba(15,23,42,0.5)" fontSize={9} tickLine={false} unit="ms" />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
                 <Bar dataKey="Latency (ms)" radius={[6, 6, 0, 0]}>
                   {latencyData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fillCode} />
